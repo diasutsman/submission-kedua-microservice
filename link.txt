@@ -1,0 +1,5 @@
+# frontend
+ghcr.io/diasutsman/karsajobs-ui
+
+# backend
+ghcr.io/diasutsman/karsajobs
