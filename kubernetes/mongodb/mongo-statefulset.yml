@@ -1,30 +1,30 @@
-apiVersion: apps/v1
-kind: StatefulSet
+apiVersion: apps/v1 # Menentukan versi API Kubernetes yang digunakan.
+kind: StatefulSet # Mendefinisikan jenis sumber daya Kubernetes sebagai StatefulSet.
 metadata:
-  name: mongo-statefulset
+  name: mongo-statefulset # Menentukan nama StatefulSet untuk MongoDB.
   labels:
-    app: mongo
+    app: mongo # Memberi label aplikasi MongoDB.
 spec:
-  serviceName: mongo-svc
-  replicas: 1
+  serviceName: mongo-svc # Menentukan nama layanan untuk StatefulSet.
+  replicas: 1 # Menentukan jumlah replika yang diinginkan.
   selector:
     matchLabels:
       app: mongo
-      tier: data
-  minReadySeconds: 10
+      tier: data # Menentukan selector untuk mengidentifikasi Pods untuk rute lalu lintas.
+  minReadySeconds: 10 # Menentukan jumlah detik minimal yang harus berjalan setiap pod sebelum dianggap siap.
   template:
     metadata:
       labels:
         app: mongo
         tier: data
     spec:
-      terminationGracePeriodSeconds: 10
+      terminationGracePeriodSeconds: 10 # Menentukan waktu yang diberikan kepada pod untuk menyelesaikan pekerjaannya sebelum dihentikan.
       containers:
         - name: mongo
-          image: mongo:3 # Mengubah versi Docker image menjadi "mongo:3"
-          imagePullPolicy: IfNotPresent # Menambahkan kebijakan penarikan gambar
+          image: mongo:3 # Mengubah versi Docker image MongoDB menjadi "mongo:3".
+          imagePullPolicy: IfNotPresent # Menambahkan kebijakan penarikan gambar.
           ports:
-            - containerPort: 27017
+            - containerPort: 27017 # Menentukan port yang akan di-expose dalam container.
           env:
             - name: MONGO_INITDB_ROOT_USERNAME_FILE
               value: "/etc/mongo-credentials/MONGO_ROOT_USERNAME"
@@ -32,19 +32,18 @@ spec:
               value: "/etc/mongo-credentials/MONGO_ROOT_PASSWORD"
           volumeMounts:
             - name: data-volume
-              mountPath: /data/db
+              mountPath: /data/db # Mount path untuk volume data.
             - name: config-volume
-              mountPath: /config
+              mountPath: /config # Mount path untuk volume konfigurasi.
             - name: secret-volume
-              mountPath: /etc/mongo-credentials
+              mountPath: /etc/mongo-credentials # Mount path untuk volume rahasia.
       volumes:
         - name: data-volume
           persistentVolumeClaim:
-            claimName: mongo-pvc
+            claimName: mongo-pvc # Nama klaim PersistentVolume untuk data.
         - name: config-volume
           configMap:
-            name: mongo-configmap
+            name: mongo-configmap # Nama ConfigMap untuk konfigurasi.
         - name: secret-volume
           secret:
-            secretName: mongo-secret
-
+            secretName: mongo-secret # Nama Secret untuk rahasia.

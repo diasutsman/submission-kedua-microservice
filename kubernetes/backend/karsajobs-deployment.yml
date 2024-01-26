@@ -1,38 +1,38 @@
-apiVersion: apps/v1 # Specifies the Kubernetes API version being used.
-kind: Deployment # Defines the Kubernetes resource type as a Deployment
+apiVersion: apps/v1 # Menentukan versi API Kubernetes yang digunakan.
+kind: Deployment # Mendefinisikan jenis sumber daya Kubernetes sebagai Deployment
 metadata:
-  name: karsajobs-deploy # Name of the deployment
+  name: karsajobs-deploy # Nama deployment
   labels:
-    app: karsajobs # Label for identifying the app
+    app: karsajobs # Label untuk mengidentifikasi aplikasi
 spec:
-  replicas: 1 # Number of replica pods to maintain
+  replicas: 1 # Jumlah replika pod yang akan dijaga
   selector:
     matchLabels:
-      app: karsajobs # Selector for identifying the app
-      tier: backend # Selector for identifying the tier
+      app: karsajobs # Selector untuk mengidentifikasi aplikasi
+      tier: backend # Selector untuk mengidentifikasi tier
   template:
     metadata:
       labels:
-        app: karsajobs # Label for identifying the app
-        tier: backend # Label for identifying the tier
+        app: karsajobs # Label untuk mengidentifikasi aplikasi
+        tier: backend # Label untuk mengidentifikasi tier
     spec:
       containers:
-        - name: karsajobs # Container name
-          image: ghcr.io/diasutsman/karsajobs:latest # Docker image location
+        - name: karsajobs # Nama kontainer
+          image: ghcr.io/diasutsman/karsajobs:latest # Lokasi gambar Docker
           ports:
-            - containerPort: 8080 # Port to expose in the container
+            - containerPort: 8080 # Port yang akan di-expose di dalam kontainer
           env:
-            - name: APP_PORT # Environment variable for the app port
-              value: "8080" # Value for the app port
-            - name: MONGO_HOST # Environment variable for MongoDB host
-              value: mongo-svc # Value for the MongoDB host
-            - name: MONGO_USER # Environment variable for MongoDB username
+            - name: APP_PORT # Variabel lingkungan untuk port aplikasi
+              value: "8080" # Nilai untuk port aplikasi
+            - name: MONGO_HOST # Variabel lingkungan untuk host MongoDB
+              value: mongo-svc # Nilai untuk host MongoDB
+            - name: MONGO_USER # Variabel lingkungan untuk nama pengguna MongoDB
               valueFrom:
                 secretKeyRef:
-                  name: mongo-secret # Name of the secret containing MongoDB credentials
-                  key: MONGO_ROOT_USERNAME # Key in the secret for MongoDB username
-            - name: MONGO_PASS # Environment variable for MongoDB password
+                  name: mongo-secret # Nama rahasia yang berisi kredensial MongoDB
+                  key: MONGO_ROOT_USERNAME # Kunci dalam rahasia untuk nama pengguna MongoDB
+            - name: MONGO_PASS # Variabel lingkungan untuk kata sandi MongoDB
               valueFrom:
                 secretKeyRef:
-                  name: mongo-secret # Name of the secret containing MongoDB credentials
-                  key: MONGO_ROOT_PASSWORD # Key in the secret for MongoDB password
+                  name: mongo-secret # Nama rahasia yang berisi kredensial MongoDB
+                  key: MONGO_ROOT_PASSWORD # Kunci dalam rahasia untuk kata sandi MongoDB

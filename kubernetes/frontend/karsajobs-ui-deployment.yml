@@ -1,26 +1,26 @@
-apiVersion: apps/v1 # Specifies the Kubernetes API version being used.
-kind: Deployment # Defines the Kubernetes resource type as a Deployment
+apiVersion: apps/v1 # Menentukan versi API Kubernetes yang digunakan.
+kind: Deployment # Mendefinisikan jenis sumber daya Kubernetes sebagai Deployment
 metadata:
-  name: karsajobs-ui-deploy # Name of the Deployment
+  name: karsajobs-ui-deploy # Nama Deployment
   labels:
-    app: karsajobs-ui # Label for the app
+    app: karsajobs-ui # Label untuk aplikasi
 spec:
-  replicas: 1 # Number of desired replicas for the application
+  replicas: 1 # Jumlah replika yang diinginkan untuk aplikasi
   selector:
     matchLabels:
-      app: karsajobs-ui # Selector label for the app
-      tier: frontend # Selector label for the tier (frontend in this case)
+      app: karsajobs-ui # Selector label untuk aplikasi
+      tier: frontend # Selector label untuk tier (frontend dalam hal ini)
   template:
     metadata:
       labels:
-        app: karsajobs-ui # Label for the app within the pod
-        tier: frontend # Label for the tier within the pod
+        app: karsajobs-ui # Label untuk aplikasi dalam pod
+        tier: frontend # Label untuk tier dalam pod
     spec:
       containers:
-        - name: karsajobs-ui # Name of the container
-          image: ghcr.io/diasutsman/karsajobs-ui:latest # Docker image used for the container
+        - name: karsajobs-ui # Nama kontainer
+          image: ghcr.io/diasutsman/karsajobs-ui:latest # Gambar Docker yang digunakan untuk kontainer
           ports:
-            - containerPort: 8000 # Port to expose within the container
+            - containerPort: 8000 # Port yang akan di-expose dalam kontainer
           env:
             - name: VUE_APP_BACKEND
-              value: "http://192.168.58.2:30007" # Environment variable for the backend URL
+              value: "http://192.168.10.1:30007" # Variabel lingkungan untuk URL backend

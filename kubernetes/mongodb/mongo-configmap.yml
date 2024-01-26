@@ -1,12 +1,13 @@
- apiVersion: v1  # Specifies the Kubernetes API version being used.
- kind: ConfigMap  # Defines the type of Kubernetes resource being created, which is a ConfigMap in this case.
+apiVersion: v1 # Menentukan versi API Kubernetes yang digunakan.
+kind: ConfigMap # Mendefinisikan jenis sumber daya Kubernetes yang dibuat, yaitu ConfigMap dalam kasus ini.
 
- metadata:
-   name: mongo-configmap  # Specifies the name of the ConfigMap being created.
-   labels:
-     app: mongo  # Defines a label for the ConfigMap, associating it with the "mongo" application.
+metadata:
+  name: mongo-configmap # Menentukan nama ConfigMap yang dibuat.
+  labels:
+    app: mongo # Menentukan label untuk ConfigMap, mengasosiasikannya dengan aplikasi "mongo".
 
- data:
-   mongo.conf: |  # Configures the MongoDB storage settings, specifying the database path.
-     storage:
-       dbPath: /data/db 
+data:
+  mongo.conf:
+    | # Mengonfigurasi pengaturan penyimpanan MongoDB, menentukan jalur database.
+    storage:
+      dbPath: /data/db
